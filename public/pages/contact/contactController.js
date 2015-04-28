@@ -3,7 +3,9 @@ app.controller('ContactCtrl', function ($http,$scope, $rootScope,LoginService)
 {
 	console.log("In ContactCtrl controller ");
 	
-	$rootScope.currentUser = LoginService.chkLogin(function(){
+	LoginService.chkLogin(function(response){
+		console.log('Current user: ')
+		$rootScope.currentUser = response;
 		 console.log($rootScope.currentUser);
 	});
 	

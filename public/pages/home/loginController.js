@@ -1,5 +1,11 @@
 app.controller('LoginCtrl', function($scope, $http, $location,$rootScope)
 {
+	 
+	$('.nav :not(.dropdown) a').on('click', function(){ 
+        if($('.navbar-toggle').css('display') !='none'){
+            $(".navbar-toggle").trigger( "click" );
+        }
+    });
 
 	$http.get('/rest/loggedin').success(function(user)
     {

@@ -1,95 +1,16 @@
-﻿<nav ng-controller="LoginCtrl" class="navbar navbar-fixed-top navbar-inverse">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand"> UpLifter </a>
-            </div>
+﻿ 
 
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#/home">Home</a></li>
-                    <li>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    
-                    <!--<a href="#/view"> View Recepients </a>  -->
-                    <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">View Recepients <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#/view/smother">Single Mothers</a></li>
-                            <li><a href="#/view/sfather">Single Fathers</a></li>
-                            <li><a href="#/view/senior">Senior citizens</a></li>
-                            <li><a href="#/view/kids">Kids</a></li>
-                            <li><a href="#/view/family">Families</a></li>
-                            <li><a href="#/view/disbaled">Disabled</a></li>
-                            <li><a href="#/view/education">Education</a></li>
-                            <li><a href="#/view/medical">Medical Treatment</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#/view/all">View All</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                </div>
-                 </li>
-                    
-                    
-                    
-                    <li ng-show="currentUser"><a href="#/profile"> My Profile </a></li>
-                    <li><a ng-show="currentUser" href="#/settings"> Settings </a></li>
-                    <li><a href="#/contact"> Contact us</a></li>
-
-                </ul>
-
-
-                <form class="nav navbar-nav navbar-right" ng-show="currentUser">
-
-                    <div class=" form-group"></div>
-                    <div class="form-group">
-                    </div>
-
-                    <button ng-click="logout()" type="button" class="btn btn-primary">Logout</button>
-
-                </form>
-
-
-
-                <form class="navbar-form navbar-right" id="loginForm" ng-hide="currentUser">
-
-                    <div class="form-group">
-                        <input ng-model="user.username" type="text" placeholder="Username" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <input ng-model="user.password" type="password" placeholder="Password" class="form-control">
-                    </div>
-
-                    <button ng-click="login(user)" type="button" class="btn btn-primary">Sign In</button>
-				
-				    <button ng-click="go('/register')" type="button" class="btn btn-success">Sign Up</button>
-					
-					 
-                </form>
-
-            </div><!-- /.nav-collapse -->
-        </div>
-    </nav>
-
-<div class="container">
-    <div class="row">
-	
-	  <div class="col-lg-3">
+<div class="container padtop90">
+ 	
+	  <div class="col-md-3">
 	  </div>
+	
 	  
-	<div class="col-lg-6">
-        <form role="form" id="regForm" name="myForm" novalidate ng-submit="register(newuser)">
-           
-                <div class="well well-sm"><strong><span class="glyphicon glyphicon-asterisk"></span>Required Field</strong></div>
-
- 
+	<div class="col-md-6">
+		 <h3 class="text-cadetBlue text-center"> Fields with * are mandatory.</h3>
+	
+        <form role="form" class="text-grey" id="regForm" name="myForm"  ng-submit="register(newuser)">
+           		 
                 <div class="form-group">
                     <label for="first">First Name</label>
                     <div class="input-group">
@@ -166,24 +87,25 @@
 					<label > Upload Profile picture </label>
 				 </div>
 				 
-				 <div class="col-lg-6" >
+				 <div class="col-md-6" >
 					 	
 						 <input ng-model="photo" class="form-control" id="filePicker" type="file">
 				 </div>
 					
-				 <div class="col-lg-6" >
+				 <div class="col-md-6" >
                		<img ng-src="{{loc}}" width="100" height="100" class="avatar img-thumbnail pull-right" alt="avatar">
               	 </div>
 					
 					
 				<div class="form-group">
 	               
-	              <input type="checkbox" name="recepient" ng-model="recepient"> I am in Need <br>
+	              <input type="checkbox" name="recepient" ng-model="recepient"> I am a recipient <br>
 	              
                 </div>
                 
 				<div class="form-group" ng-show="recepient">
-	                    <label for="needCategory">Choose the category that most suits you </label>
+	                    <label for="needCategory">Choose the category that most suits you 
+	                     </label>
 	                    <div >
 	                    	<select ng-model="newuser.need.category" class="form-control" required>
 	                     	<option value="sfather">Single father</option>
@@ -197,15 +119,16 @@
 						 
 							<option value="other">Other</option>
  							</select>
-	                        <span ng-show="myForm.user.$error.required"> Category  is required.</span>
 	
 	                    </div>
                 </div>
+               
+                
 				
 				 <div class="form-group" ng-show="recepient">
 	                    <label for="needSummary">Summary of your need </label>
 	                    <div class="input-group">
-	                        <input ng-model="newuser.need.summary" type="text" class="form-control" name="needSummary" id="needSummary" placeholder="one line desciption of your need" required>
+	                        <input ng-model="newuser.need.summary" type="text" class="form-control" name="needSummary" id="needSummary" placeholder="one line desciption of your need" ng-required="recepient">
 	                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
 	                        <span ng-show="myForm.user.$error.required"> Summary is required.</span>
 	
@@ -215,7 +138,7 @@
                 <div class="form-group" ng-show="recepient">
                     <label for="needAmount">Amount you need </label>
                     <div class="input-group">
-                        <input ng-model="newuser.need.amount" type="number" min="1" class="form-control" name="needAmount" id="needAmount" placeholder="Specify the amount you need in $" required>
+                        <input ng-model="newuser.need.amount" type="number" min="1" class="form-control" name="needAmount" id="needAmount" placeholder="Specify the amount you need in $" ng-required="recepient">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                         <span ng-show="myForm.user.$error.required"> Amount is required.</span>
 
@@ -225,7 +148,7 @@
                 <div class="form-group" ng-show="recepient">
                     <label for="needText"> Brief description of your need </label>
                     <div class="input-group">
-                        <textarea ng-model="newuser.need.text" type="text" class="form-control" name="needText" id="needText" rows="6" placeholder="Describe your need" required> </textarea>
+                        <textarea ng-model="newuser.need.text" type="text" class="form-control" name="needText" id="needText" rows="6" placeholder="Describe your need" ng-required="recepient"> </textarea>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                         <span ng-show="myForm.user.$error.required"> Description is required.</span>
 
@@ -240,10 +163,10 @@
 
  
                 <div class="form-group">
-                   <br />
                     <br />
-                    <span ng-show="sucessfulMessage" id="succMsg"> <b>You have registered Successfully ! Login with your UserID and password.</b></span>
-
+                    <br />
+ 					 <span ng-show="needErrMessage" id="dangerMsg"> <b> Please fill  all the fields about your need </b></span>
+ 					 <br />
                     <span ng-show="passwordNotMatchMessage" id="dangerMsg"> <b> Password and retyped password do not match.</b></span>
 
                     <span ng-show="userExistsMessage" id="dangerMsg"> <b>This user name is already taken. Please enter some other user name</b></span>
@@ -253,10 +176,9 @@
 		 </form>
 	 </div>
 	 
-	 <div class="col-lg-3">
+	 <div class="col-md-3">
 	  </div>
 	  
-    </div>
-
+ 
 </div>
    

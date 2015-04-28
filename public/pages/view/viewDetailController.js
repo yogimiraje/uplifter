@@ -10,16 +10,16 @@ app.controller('ViewDetailCtrl', function ($scope,$rootScope, $http,$routeParams
     
     $scope.class = unbookmarkedClass ;
     
-    var bookmarkedClass = "bookmarked bookmarkCenter glyphicon glyphicon-star";
-    var unbookmarkedClass = "bookmarkCenter glyphicon glyphicon-star-empty";
+    var bookmarkedClass = "bookmarked glyphicon glyphicon-star";
+    var unbookmarkedClass = "glyphicon glyphicon-star-empty";
    
     $http.get('/rest/loggedin').success(function(user)
     {
 		if (user !== '0'){
+			console.log('fetched current user info');
         	$rootScope.currentUser = user;
-           // console.log($rootScope.currentUser);
-        	
-            
+            console.log($rootScope.currentUser);
+        
         }
 		else{
 			 
@@ -29,7 +29,9 @@ app.controller('ViewDetailCtrl', function ($scope,$rootScope, $http,$routeParams
     });
     
     //var needsData = getNeedsData();
-   
+ 
+    
+ //*************************** Get Need Details ************************************************   
     function getNeedsData() {
     	
     	console.log('in getNeedsData()');
@@ -59,6 +61,8 @@ app.controller('ViewDetailCtrl', function ($scope,$rootScope, $http,$routeParams
       });
     }
     
+ 
+//*************************** Get Bookmark Details ************************************************   
     
  function getBookmarkDetails(){
 	 console.log('in getBookmarkDetails()');
@@ -101,7 +105,7 @@ app.controller('ViewDetailCtrl', function ($scope,$rootScope, $http,$routeParams
     
     
     
-    
+//****************************** Donate  ************************************************   
     
     $scope.donate = function(){
     	console.log("doante clicked");
@@ -212,6 +216,7 @@ app.controller('ViewDetailCtrl', function ($scope,$rootScope, $http,$routeParams
     };
     */
     
+//****************************** Post Comment  ************************************************   
      
     $scope.postComment = function(){
     	console.log('postComment');

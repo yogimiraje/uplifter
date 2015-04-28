@@ -86,16 +86,9 @@ var userSchema = new Schema({
 
 var User = mongoose.model("User",userSchema);
 
-//var DonationReceivedModel = mongoose.model("DonationReceivedModel",donationReceivedSchema);
-
-//var DonationGivenModel = mongoose.model("DonationGivenModel",donationGivenSchema);
-
-
-//var CommentSchemaModel = mongoose.model("CommentSchemaModel", commentSchema);
- 
 
 //----------------------------------------------------------------------
-// REGISTER and LOGIN API
+// REGISTER and LOGIN :
 //----------------------------------------------------------------------
 
 passport.use(new LocalStrategy(
@@ -138,9 +131,7 @@ app.post('/rest/login', passport.authenticate('local'), function(req, res)
     		console.log(err); 
             return next(err); 
         }
-        
-        
-         // console.log(user);
+           // console.log(user);
     	res.json(user);
     });
 
@@ -183,15 +174,19 @@ app.post('/rest/register', function(req, res)
 		        
 		        newUser.save(function(err, newUser)
 			        {
+		        	
+		        		JSON.stringify(newUser)
+		        		
+		        	/*
 		        		var user = {};
 		        		user._id = newUser._id;
 		        		user.username = newUser.username;
-		        		user.password = newUser.password;
+		        		user.password = newUser.password;*/
 		        		
-			            req.login(user, function(err)
+			            req.login(newUser, function(err)
 			            {
 			                if(err) { return next(err); }
-			                 res.send(newUser);
+			                 res.json(newUser);
 			            });
 			        });
 		       
@@ -221,7 +216,7 @@ app.post('/rest/logout', function(req, res)
 });
 
 //----------------------------------------------------------------------
-//VIEW API
+//VIEW RECIPIENT  
 //----------------------------------------------------------------------
 app.get('/rest/recipient/:category', function(req, res){
 	 
@@ -316,8 +311,12 @@ app.put('/rest/donate', function(req, res){
 		donationRec.message = donation.message;
 		donationRec.receivedOn = donation.date;
 
+		console.log(donationRec);
 		
 		var donationGive = {};
+		
+		console.log(donationGive);
+
 		 
 		donationGive.receiver = donation.receiver;
 		donationGive.receiverName = donation.receiverName;
@@ -348,14 +347,14 @@ app.put('/rest/donate', function(req, res){
 						console.log(count);
 
 					 	User.findOne({username:donation.donor}).exec(function(err,user){
-					 	  	 user.donationGiven.push(donationGive);
-					 		 user.save(function(err){
-								   if(err){
-									   console.log(err);
-									   return next(err);
-								   }
-								   
-					 		 });	 
+				 	  	 user.donationGiven.push(donationGive);
+				 		 user.save(function(err){
+							   if(err){
+								   console.log(err);
+								   return next(err);
+							   }
+							   
+				 		 });	 
 					 		
 					 	});
 						
@@ -461,18 +460,18 @@ app.put('/rest/postComment', function(req, res){
 		console.log(comment);
  		
 		User.findOne({username:commentReceiver}).exec(function(err,user) {
-			   user.need.comment.push(comment);
-			   
-			   user.save(function(err){
-				   if(err){
-					   console.log(err);
-					   next(err) ;
-				   }
-				   else
-				   {
-					   console.log(user.need.comment);
-					   res.json(user.need.comment);
-				   }
+		   user.need.comment.push(comment);
+		   
+		   user.save(function(err){
+			   if(err){
+				   console.log(err);
+				   next(err) ;
+			   }
+			   else
+			   {
+				   console.log(user.need.comment);
+				   res.json(user.need.comment);
+			   }
 		   });
 		});
 });
@@ -480,7 +479,7 @@ app.put('/rest/postComment', function(req, res){
 	
 			
 //----------------------------------------------------------------------
-// PROFILE and SETTINGS API
+// PROFILE and SETTINGS :
 //----------------------------------------------------------------------
 
 app.get('/rest/profile/:id', function(req, res){
@@ -512,36 +511,36 @@ app.get('/rest/publicProfile/:username', function(req, res){
 
 
 app.post('/rest/update', function(req, res){
-			console.log('in rest/update');
-			
-		    var user = req.body;
-		    
-		    console.log(user);
-		    
-		  
+	console.log('in rest/update');
+	
+    var user = req.body;
+    
+    console.log(user);
+    
+  
 
-			User.find({username: user.username}).remove(function(err,response){
-				
-				if(err) { return next(err); }
-				
-				console.log('user removed')
-				
-				var newUser = new User(user);
-		        
-		        newUser.save(function(err, newUser)
-			        { 
-		        	   if(err) { return next(err); }
-		        	    console.log('user saved');
-		                res.json(newUser);
-			             
-			        });
-			});      
+	User.find({username: user.username}).remove(function(err,response){
+		
+		if(err) { return next(err); }
+		
+		console.log('user removed')
+		
+		var newUser = new User(user);
+        
+        newUser.save(function(err, newUser)
+	        { 
+        	   if(err) { return next(err); }
+        	    console.log('user saved');
+                res.json(newUser);
+	             
+	        });
+	});      
 				   
 });		
 
 
 //----------------------------------------------------------------------
-//OTHER API
+//OTHER SERVICES
 //----------------------------------------------------------------------
 
 //generic  web service to get user details
@@ -566,3 +565,5 @@ var ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;	
 
 app.listen(port, ip);
+
+//*************************   End of file *****************************  

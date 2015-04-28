@@ -1,9 +1,12 @@
 app.controller('SettingsCtrl', function ($http, $scope, $location, $rootScope,ProfileService)
 {
 	console.log("In SettingsCtrl ");
+	
+	$scope.selectedTab = 1;
 
 	var id = $rootScope.currentUser._id;
 	//console.log(id);
+	 
 	 
 	
 	ProfileService.profileDetails(id,function(response){
@@ -11,7 +14,16 @@ app.controller('SettingsCtrl', function ($http, $scope, $location, $rootScope,Pr
 	$scope.user = response;
 	console.log("old user:")
 	console.log(response);
-	
+	if($scope.user.need.summary){
+	//	console.log('I am a recipient');
+		$scope.recipient = true;
+		
+	}
+	else{
+	//	console.log('I am a NOT recipient');
+
+		$scope.recipient = false;
+	}
 	
 	 
 	});

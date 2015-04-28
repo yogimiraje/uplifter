@@ -1,7 +1,7 @@
 app.controller('ProfileCtrl', function ($http, $scope, $location,$rootScope,LoginService,ProfileService)
 {
 	console.log("In ProfileCtrl ");
-	
+	$scope.selectedTab = 1;
 	console.log($rootScope.currentUser);
 	
 	
@@ -18,7 +18,7 @@ app.controller('ProfileCtrl', function ($http, $scope, $location,$rootScope,Logi
 	  if(response.role == "both"){
     		$scope.receiver = true;
     		$scope.amount = response.need.amount;
-    		 
+    		 	
     		console.log(response.need.amountReceived);
     		
     		if(response.need.receivedAmount == 0){

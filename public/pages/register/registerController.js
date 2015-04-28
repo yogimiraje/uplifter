@@ -1,16 +1,19 @@
 app.controller('RegisterCtrl', function ($scope, $http, $location,$rootScope,$modal)
 {
-    $scope.sucessfulMessage = false;
-    $scope.passwordNotMatchMessage = false;
-    $scope.userExistsMessage = false;
-    
+	console.log ('RegisterCtrl');	
+
+   
     
     $scope.register = function(newUser){  
 
-    	console.log ('RegisterCtrl');	
+	    var noErr = true;
+	    $scope.passwordNotMatchMessage = false;
+	    $scope.userExistsMessage = false;
+     	
+     
     	
     	if (newUser.password == newUser.password2) {
-    		console.log('password matches') 
+    		console.log('password matches')  
     		
     		if(!$scope.recepient){
         		console.log('NOT a recepient');
@@ -34,32 +37,32 @@ app.controller('RegisterCtrl', function ($scope, $http, $location,$rootScope,$mo
         	
     		var res = 0;
         	 
-    		$http.post("/rest/register", newUser)
-            .success(function(response){
-            	res = res + 1;
-            	console.log('received response from register:' + res);
-                console.log(response);
-                 
-                 
-                if(response != null)
-                {
-                    $rootScope.currentUser = response;
-                    console.log('new user:' +   $rootScope.currentUser);
-                    $location.url("/profile");
-                }
-                else
-            	{
-                	
-                	console.log('RegisterCntrl: user exists already');
-                			
-                	$scope.userExistsMessage = true;
-                	$scope.sucessfulMessage = false;
-                	$scope.passwordNotMatchMessage = false;
-                	     
-            	}
-            });
+    		if(noErr){
+	    		$http.post("/rest/register", newUser)
+	            .success(function(response){
+	            	res = res + 1;
+	            	console.log('received response from register:' + res);
+	                console.log(response);
+	                 
+	                 
+	                if(response != null)
+	                {
+	                    $rootScope.currentUser = response;
+	                    console.log('new user:' +   $rootScope.currentUser);
+	                    $location.url("/profile");
+	                }
+	                else
+	            	{
+	                	console.log('RegisterCntrl: user exists already');
+	                			
+	                	$scope.userExistsMessage = true;
+	                	$scope.sucessfulMessage = false;
+	                	$scope.passwordNotMatchMessage = false;
+	                	     
+	            	}
+	            });
     		 
-    		
+    		}
     	}
     	
     	else{

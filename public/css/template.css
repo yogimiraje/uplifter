@@ -1,11 +1,4 @@
-﻿body{
-      padding-bottom: 30px;
-
-}
-.imgComprssed{
-	height:80%;
-	width:100%;
-}
+﻿
 .bookmarked{
 	color:#FFD700;
 }
@@ -49,10 +42,10 @@
 	font-size: 15px;
 }
 #contact{
-
     font-size:20px;
     color:cadetblue;
 }
+
 
 #uploadButton{
 	margin-left:20px;
@@ -77,8 +70,61 @@ fieldset{
 	padding: 2px;
 	padding-top: 1px;
 }
+	
+.padtop5{
+   padding:10 0 15 0px;
+	
+}
+.padtop50{
+   padding-top:50px;
+	
+}
+.padtop70{
+   padding-top:70px;
+	
+}
+.padtop90{
+   padding-top:90px;
+	
+}
+
+.padtop120{
+   padding-top:120px;
+	
+}
+.text-white{
+	color:#ababab;
+}
+.text-cadetBlue{
+	color:cadetBlue;
+}
+
+.text-blue{
+	color:#5b66ff;
+}
+.
+text-grey1{
+		color:#7f7f7f;
+	
+}
+.text-grey{
+		color:#ababab;
+	
+}
+.pad-right{
+	padding-right:10px;
+}
+.pad-bottom-10{
+	padding-bottom:10px;
+}
+
+.pad-left-10{
+	padding-left: 10px;
+}
+
 [ng-click],
 [data-ng-click],
 [x-ng-click] {
     cursor: pointer;
 }
+

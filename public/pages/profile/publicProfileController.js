@@ -1,6 +1,7 @@
 app.controller('PublicProfileCtrl', function ($http, $scope, $rootScope,LoginService,$routeParams){
 console.log("In PublicProfileCtrl ");
 //console.log($rootScope.currentUser);
+$scope.selectedTab = 1;
 
 
 var username = $routeParams.username
@@ -11,9 +12,9 @@ $http.get('/rest/publicProfile/' + username)
 .success(function (response) {
 	console.log('getting Profile Details');
 
-	$scope.publicProf = response;
-	
-	console.log($scope.publicProf);  
+	//$scope.publicProf = response;
+	$scope.user = response;
+	console.log($scope.user);  
 	
 	 if(response.role == "both"){
  		$scope.receiver = true;
