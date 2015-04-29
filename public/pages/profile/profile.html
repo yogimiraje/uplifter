@@ -3,10 +3,10 @@
      
     <div class="container">
     
-        <div class="col-md-2">
+        <div class="col-md-1">
         </div>
 
-        <div class="col-md-8 ">
+        <div class="col-md-10">
         
         	
         	
@@ -32,6 +32,13 @@
 					      <li ng-class="{active: selectedTab == 4}">
 					      <a href="#/profile" ng-click="selectedTab = 4;">Bookmarks</a>
 					    </li>
+					      <li ng-class="{active: selectedTab == 5}">
+					      <a href="#/profile" ng-click="selectedTab = 5;">Followings</a>
+					    </li>
+					    <li ng-class="{active: selectedTab == 6}">
+					      <a href="#/profile" ng-click="selectedTab = 6;">Followers</a>
+					    </li>
+					    
 					  </ul>
 					
 					  <div class="tab-content center-block" ng-show="selectedTab == 1">
@@ -123,28 +130,67 @@
 		      		 
 		      		 
 		      		   <div class="tab-content" ng-show="selectedTab == 4">
-					 	<div ng-show= user.bookmarked.length>       	
+					 	<div ng-show= user.bookmarked.length >       	
 				        	 
 				        		
-				        		<span ng-repeat= "user in user.bookmarked" class="pad-right">  
+				        		<div ng-repeat= "user in user.bookmarked" class="arranger">  
 				        		        
- 				        		  		<a class="glyphicon glyphicon-user btn btn-primary" href="#/publicprof/{{user}}">{{user}} </a>  
-  				        		</span>
+				        		    <div class="pad-element">    
+									<button class="glyphicon glyphicon-star btn btn-primary" ng-click="viewNeedProfile(user)">&nbsp;{{user}} </button>  	
+									</div>
+								</div>				        		 
 				        	 	
-			        	</div>
+ 			        	</div>
 			        	  
  						<div ng-hide= user.bookmarked.length>
-			               <h3 class="text-cadetBlue">You have not bookmarked anyone. Bookmark to find what others are upto ! </h3>
+			               <h3 class="text-cadetBlue">You have not bookmarked anyone. Bookmark your favourite recipient ! </h3>
 			        	    
 			        	 </div> 
 		 			
 		      		 </div>   
 		      		 
+		      		  <div class="tab-content" ng-show="selectedTab == 5" >
+					 	<div ng-show= user.following.length >       	
+				        	 
+ 				        		<div ng-repeat= "user in user.following" class="arranger"> 
+ 				        			<div class="pad-element">
+ 				        				<a class="glyphicon glyphicon-user btn btn-primary" href="#/publicprof/{{user}}">&nbsp;{{user}} </a>  
+ 				        				
+ 				        			</div>
+ 				        	
+			        			</div>
+ 			        	</div>
+			        	  
+ 						<div ng-hide= user.following.length>
+			               <h3 class="text-cadetBlue">You are not following anybody. </h3>
+			        	    
+			        	 </div> 
+		 			
+		      		 </div> 
+		      		 
+		      		  <div class="tab-content" ng-show="selectedTab == 6">
+					 	<div ng-show= user.follower.length>       	
+				        	 
+				        		
+				        		<div ng-repeat= "user in user.follower" class="arranger">  
+				        		        
+				        		        <div class = "pad-element">
+ 				        		  			<a class="glyphicon glyphicon-user btn btn-primary" href="#/publicprof/{{user}}">&nbsp;{{user}} </a>  
+				        	 			</div>
+			        			</div>
+			        	</div>
+			        	  
+ 						<div ng-hide= user.follower.length>
+			               <h3 class="text-cadetBlue">You do not have any followers. </h3>
+			        	    
+			        	 </div> 
+		 			
+		      		 </div>  
 		      		   
 					  </div>
 					</div> 
 					  </div>
-					</div>
+					 
         	  	
         <div class="col-md-2">
        	

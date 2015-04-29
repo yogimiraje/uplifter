@@ -74,7 +74,9 @@ var userSchema = new Schema({
 	},
 	donationReceived: [donationReceivedSchema],
 	donationGiven: [donationGivenSchema],
-	bookmarked: [String]
+	bookmarked: [String],
+	following: [String],
+	follower: [String]
 	
 },
 {collection:"user"});
@@ -260,6 +262,8 @@ function sendRecipientData(users,res){
     res.send(recipientData);  
 }
 
+
+//get recipient details by ID
 app.get('/rest/details/:id', function(req, res){
 	 
 	
@@ -290,6 +294,22 @@ app.get('/rest/details/:id', function(req, res){
 	  }); 
 	
 });
+
+// get recipient details by username
+app.get('/rest/getid/:username', function(req, res){
+	 
+	console.log('in /rest/getid');
+	var username = req.params.username
+	console.log(username);
+	
+	User.findOne({username:req.params.username}, function(err, user) {
+		  if(err) console.log(err);
+		  console.log(user._id);
+		  res.json(user._id);  
+	  }); 
+	
+});
+
 
 
 //----------------------------------------------------------------------
@@ -503,7 +523,7 @@ app.get('/rest/publicProfile/:username', function(req, res){
 		  if(err) {
 			  console.log(err);
 		  }
-	      console.log(user);
+	      //console.log(user);
 		  res.json(user);
 		
 	});	
@@ -538,6 +558,114 @@ app.post('/rest/update', function(req, res){
 				   
 });		
 
+//----------------------------------------------------------------------
+// FOLLOW /UNFOLLOW :
+//----------------------------------------------------------------------
+app.get('/rest/following/:reqUser', function(req,res){
+	console.log('in rest/following');
+ 	
+	var reqUser = req.params.reqUser;
+	console.log(reqUser);
+	User.findOne({username:reqUser}).exec(function(err,user) {
+		    
+			   if(err){
+				   console.log(err);
+				   return ;
+			   }
+			   else
+			   {
+				   console.log(user.following);
+				   res.json(user.following);
+			   }
+		   
+		});
+	
+});
+app.put('/rest/follow', function(req, res){
+	console.log('in rest/follow');
+ 
+ 	var followInfo = req.body;
+ 	
+	console.log(followInfo);
+	
+ 	 
+	User.findOne({username:followInfo.username}).exec(function(err,user) {
+		   user.following.push(followInfo.followedUsername);
+		   
+		   user.save(function(err){
+			   if(err){
+				   console.log(err);
+				   return next(err);
+			   }
+			   else
+			   {
+				   var currentUserFollowing = user.following;
+				   ///
+				   User.findOne({username:followInfo.followedUsername}).exec(function(err,user) {
+					   user.follower.push(followInfo.username);
+					   
+					   user.save(function(err){
+						   if(err){
+							   console.log(err);
+							   return next(err);
+						   }
+						   else
+						   {
+							   console.log(user.follower);
+							   res.json(user.follower);
+						   }
+					   });
+					});
+				   
+				   ///
+ 			   }
+		   });
+		});
+
+});
+
+app.put('/rest/unfollow', function(req, res){
+	console.log('in rest/unfollow');
+ 
+ 	var unfollowInfo = req.body;
+ 	
+	//console.log(unfollowInfo);
+	
+	User.findOne({username:unfollowInfo.username}).exec(function(err,user) {
+		   user.following.pull(unfollowInfo.followedUsername);
+		   
+		   user.save(function(err){
+			   if(err){
+				   console.log(err);
+				   return next(err);
+			   }
+			   else
+			   {
+				    
+				   var currentUserFollowing = user.following;
+				   ///
+				   User.findOne({username:unfollowInfo.followedUsername}).exec(function(err,user) {
+					   user.follower.pull(unfollowInfo.username);
+					   
+					   user.save(function(err){
+						   if(err){
+							   console.log(err);
+							   return next(err);
+						   }
+						   else
+						   {
+							   console.log(user.follower);
+							   res.json(user.follower);
+						   }
+					   });
+					});
+				   
+				   ///
+			   }
+		   });
+		});
+	
+});
 
 //----------------------------------------------------------------------
 //OTHER SERVICES

@@ -80,7 +80,7 @@
            			 </form>
 		         
 		         	</br>
-                    <span ng-show="donationDone" id="succMsg"> <b>Donation received successfully. Thank you for helping me !! </b></span>
+                    <p ng-show="donationDone" class="alert alert-success" id="succMsg"> <b>Donation received successfully. Thank you for helping me !! </b></p>
                	</div>
                	
                	
@@ -104,7 +104,9 @@
          
          <div class="col-sm-8">
          
-         	<h3 class="text-white">All comments </h3>
+         	<h3 class="text-white" ng-show="needDetail.comment.length">All comments </h3>
+         	<h3 class="text-white" ng-hide="needDetail.comment.length">Be first to post a comment </h3>
+         	
 				<div class="media well" ng-repeat = "comment in needDetail.comment">
                      
                     <div class="media-body">

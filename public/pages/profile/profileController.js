@@ -1,4 +1,4 @@
-app.controller('ProfileCtrl', function ($http, $scope, $location,$rootScope,LoginService,ProfileService)
+app.controller('ProfileCtrl', function ($http, $scope, $location,$rootScope,ProfileService)
 {
 	console.log("In ProfileCtrl ");
 	$scope.selectedTab = 1;
@@ -36,8 +36,17 @@ app.controller('ProfileCtrl', function ($http, $scope, $location,$rootScope,Logi
  
 	
 	
-    $scope.editProfile = function (){
-    	
-    	 $location.path("/settings");
-    }
+	$scope.viewNeedProfile = function(username){
+		
+		console.log('In view need profile:'+ username);
+		
+		$http.get('/rest/getid/' + username)
+		.success(function (response) {
+			var userID = response;
+			console.log(userID);
+			
+	        $location.url("/viewDetail/" + userID);
+
+		});	
+	}
 });
